@@ -5,7 +5,7 @@ public class Bbs {
 	private int num_m;
 	private String title;
 	private String content_q;
-	private String category;
+	private int category;
 	private String date_q;
 	public int getNum_q() {
 		return num_q;
@@ -31,10 +31,10 @@ public class Bbs {
 	public void setContent_q(String content_q) {
 		this.content_q = content_q;
 	}
-	public String getCategory() {
+	public int getCategory() {
 		return category;
 	}
-	public void setCategory(String category) {
+	public void setCategory(int category) {
 		this.category = category;
 	}
 	public String getDate_q() {
