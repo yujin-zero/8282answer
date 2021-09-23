@@ -51,7 +51,7 @@ public class BbsDAO {
 		return -1; //데이터베이스 오류
 	}
 	
-	public int write(String title, int num_m, String content_q) {
+	public int write(String title, int num_m, String content_q, int category) {
 		String SQL = "insert into t_question values (?,?,?,?,?,?)";
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
@@ -59,7 +59,7 @@ public class BbsDAO {
 			pstmt.setInt(2, num_m);
 			pstmt.setString(3, title);
 			pstmt.setString(4, content_q);
-			pstmt.setInt(5, 0); //카테고리,,
+			pstmt.setInt(5, category); //카테고리,,
 			pstmt.setString(6, getDate());
 			return pstmt.executeUpdate();
 		} catch (Exception e) {
@@ -82,6 +82,22 @@ public class BbsDAO {
 			e.printStackTrace();
 		}
 		return -1;
+	}
+	
+	public String change(int y) {
+		String SQL=" select distinct name from t_member as m join t_question as q on m.num_m = q.num_m where m.num_m = ?;";
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			pstmt.setInt(1, y);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				return rs.getString(1);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "-1";
 	}
 	
 	public ArrayList<Bbs> getList(int pageNumber) {
@@ -122,4 +138,25 @@ public class BbsDAO {
 		return false;
 	}
 	
+	public Bbs getBbs(int num_q) {
+		String SQL = "select * from t_question where num_q = ?";
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			pstmt.setInt(1, num_q); 
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				Bbs bbs = new Bbs();
+				bbs.setNum_q(rs.getInt(1));
+				bbs.setNum_m(rs.getInt(2));
+				bbs.setTitle(rs.getString(3));
+				bbs.setContent_q(rs.getString(4));
+				bbs.setCategory(rs.getInt(5));
+				bbs.setDate_q(rs.getString(6));
+				return bbs;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 }

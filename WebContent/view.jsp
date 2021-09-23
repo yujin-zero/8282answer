@@ -1,11 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="java.io.PrintWriter" %>
-<%@ page import="bbs.BbsDAO" %>
 <%@ page import="bbs.Bbs" %>
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="t_member.UserDAO" %>
-<%@ page import="t_member.User" %>
+<%@ page import="bbs.BbsDAO" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,12 +10,6 @@
 <meta name="viewport" content="width=device-width", initial-scale="1">
 <link rel="stylesheet" href="css/bootstrap.css">
 <title>8282응답하라</title>
-<style type="text/css">
-	a, a:hover {
-		color: #000000;
-		text-decoration: none;
-	}
-</style>
 </head>
 <body>
 	<%
@@ -26,11 +17,18 @@
 		if (session.getAttribute("id") != null){
 			id = (String) session.getAttribute("id");
 		}
-		int pageNumber = 1;
-		if (request.getParameter("pageNumber") != null) {
-			pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
+		int num_q=0;
+		if (request.getParameter("num_q") != null) {
+			num_q = Integer.parseInt(request.getParameter("num_q"));
 		}
-
+		if (num_q == 0) {
+			PrintWriter script=response.getWriter();
+			script.println("<script>");
+			script.println("alert('유효하지 않은 글입니다.')");
+			script.println("location.href='main.jsp'");
+			script.println("</script>");
+		}
+		Bbs bbs = new BbsDAO().getBbs(num_q);
 	%>
 
 	<nav class="navbar navbar-default">
@@ -84,45 +82,42 @@
 	</nav>
 	<div class="container">
 		<div class="row">
-			<table class="table table-striped" style="text-align: center; border: 1px solid #dddddd">
+		<form method="post" action="viewAction.jsp">
+		<table class="table table-striped" style="text-align: center; border: 1px solid #dddddd">
 				<thead>
 					<tr>
-						<th style="background-color: #eeeeee; text-align: center; ">번호</th>
-						<th style="background-color: #eeeeee; text-align: center; ">제목</th>
-						<th style="background-color: #eeeeee; text-align: center; ">작성자</th>
-						<th style="background-color: #eeeeee; text-align: center; ">작성일</th>
+						<th colspan="3" style="background-color: #eeeeee; text-align: center; ">게시판 글 보기</th>
 					</tr>
 				</thead>
 				<tbody>
-					<%
-						BbsDAO bbsDAO = new BbsDAO();
-						ArrayList<Bbs> list = bbsDAO.getList(pageNumber);
-						for (int i=0; i<list.size(); i++) {
-					%>
+				<%
+					BbsDAO bbsDAO = new BbsDAO();
+				%>
 					<tr>
-						<td><%= list.get(i).getNum_q() %></td>
-						<td><a href="view.jsp?num_q=<%= list.get(i).getNum_q() %>"><%= list.get(i).getTitle() %></a></td>
-						<td><%= bbsDAO.change(list.get(i).getNum_m()) %></td> 
-						<td><%= list.get(i).getDate_q().substring(0, 11) + list.get(i).getDate_q().substring(11,13) + "시" + list.get(i).getDate_q().substring(14,16) + "분" %></td>
+						<td style="width: 20%;">글 제목</td>
+						<td colspan="2"><%= bbs.getTitle() %></td>
 					</tr>
-					<%		
-						}
-					%>
-					
+					<tr>
+						<td>작성자</td>
+						<td colspan="2"><%= bbsDAO.change(bbs.getNum_m())%></td>
+					</tr>
+					<tr>
+						<td>작성일자</td>
+						<td colspan="2"><%= bbs.getDate_q().substring(0, 11) + bbs.getDate_q().substring(11,13) + "시" + bbs.getDate_q().substring(14,16) + "분" %></td>
+					</tr>
+					<tr>
+						<td>내용</td>
+						<td colspan="2" style="min-height: 200px; text-align: left;"><%= bbs.getContent_q()%></td>
+					</tr>
+					<tr>
+						<td>댓글작성</td>
+						<td colspan="2"><textarea class="form-control" name="content_a" maxlength="1024"></textarea>
+						<input type="submit" class="btn btn-primary pull-right" value="입력"></td>
+					</tr>					
 				</tbody>
 			</table>
-			<%
-				if(pageNumber != 1) {
-			%>
-				<a href="main.jsp?pageNumber=<%=pageNumber - 1 %>" class="btn btn-sucess btn-arraw-left">이전</a>
-			<%
-				} if (bbsDAO.nextPage(pageNumber+1)) {
-			%>	
-				<a href="main.jsp?pageNumber=<%=pageNumber + 1 %>" class="btn btn-sucess btn-arraw-left">다음</a>
-			<%
-				}
-			%>
-			<a href="write.jsp" class="btn btn-primary pull-right">글쓰기</a>
+			</form>
+			<a href="main.jsp" class="btn btn-primary">목록</a>
 		</div>
 	</div>
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>

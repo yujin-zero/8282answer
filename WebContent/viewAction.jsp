@@ -2,14 +2,19 @@
     pageEncoding="UTF-8"%>
 <%@ page import="bbs.BbsDAO" %>
 <%@ page import="t_member.UserDAO" %>
+<%@ page import="t_answer.AnswerDAO" %>
 <%@ page import="java.io.PrintWriter" %>
 <% request.setCharacterEncoding("UTF-8"); %>
 <jsp:useBean id="bbs" class="bbs.Bbs" scope="page"/>
 <jsp:setProperty name="bbs" property="title" />
 <jsp:setProperty name="bbs" property="content_q" />
 <jsp:setProperty name="bbs" property="category" />
+<jsp:setProperty name="bbs" property="num_q" />
 <jsp:useBean id="user" class="t_member.User" scope="page"/>
 <jsp:setProperty name="user" property="num_m" />
+<jsp:useBean id="answer" class="t_answer.Answer" scope="page"/>
+<jsp:setProperty name="answer" property="content_a" />
+<%@ page import="bbs.Bbs" %>
 
 
 <!DOCTYPE html>
@@ -31,20 +36,21 @@
 			script.println("location.href='login.jsp'");
 			script.println("</script>");
 		} else {
-			if (bbs.getTitle() == null || bbs.getContent_q() == null) {
+			if (answer.getContent_a() == null ) {
 				PrintWriter script=response.getWriter();
 				script.println("<script>");
-				script.println("alert('입력이 안 된 사항이 있습니다.')");
+				script.println("alert('입력이 안되었습니다.')");
 				script.println("history.back()");
 				script.println("</script>");
 			} else {
 				BbsDAO bbsDAO = new BbsDAO();
+				AnswerDAO answerDAO = new AnswerDAO();
 				int num_m= bbsDAO.idnum(id);
-				int result = bbsDAO.write(bbs.getTitle(), num_m, bbs.getContent_q(), bbs.getCategory());
+				int result = answerDAO.write(answer.getContent_a(), num_m, bbs.getNum_q());
 				if (result == -1 ){
 					PrintWriter script=response.getWriter();
 					script.println("<script>");
-					script.println("alert('글쓰기에 실패했습니다.')");
+					script.println("alert('답변작성에 실패했습니다.')");
 					script.println("history.back()");
 					script.println("</script>");
 				}

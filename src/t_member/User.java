@@ -6,7 +6,7 @@ public class User {
 	private String id;
 	private String password;
 	private int point;
-	private String grade;
+	private int grade;
 	private int report_q;
 	private int report_a;
 	public int getNum_m() {
@@ -39,10 +39,10 @@ public class User {
 	public void setPoint(int point) {
 		this.point = point;
 	}
-	public String getGrade() {
+	public int getGrade() {
 		return grade;
 	}
-	public void setGrade(String grade) {
+	public void setGrade(int grade) {
 		this.grade = grade;
 	}
 	public int getReport_q() {
