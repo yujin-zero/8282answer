@@ -29,6 +29,8 @@
 			script.println("</script>");
 		}
 		Bbs bbs = new BbsDAO().getBbs(num_q);
+		
+		session.setAttribute("num_q", num_q);
 	%>
 
 	<nav class="navbar navbar-default">

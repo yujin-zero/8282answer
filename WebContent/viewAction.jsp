@@ -46,7 +46,8 @@
 				BbsDAO bbsDAO = new BbsDAO();
 				AnswerDAO answerDAO = new AnswerDAO();
 				int num_m= bbsDAO.idnum(id);
-				int result = answerDAO.write(answer.getContent_a(), num_m, bbs.getNum_q());
+				int qqq = (Integer)session.getAttribute("num_q");
+				int result = answerDAO.write(answer.getContent_a(), num_m,qqq);
 				if (result == -1 ){
 					PrintWriter script=response.getWriter();
 					script.println("<script>");
