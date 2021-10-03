@@ -123,7 +123,20 @@
 				}
 			%>
 			<a href="write.jsp" class="btn btn-primary pull-right">글쓰기</a>
+			가족 우정 사랑 고민 기타
+			
 		</div>
+			<%
+				UserDAO userDAO = new UserDAO();
+				ArrayList<User> list1 = userDAO.getList();
+				for(int i = 0; i<list1.size(); i++) {
+			%>
+				<%= i+1 %>.
+				<%= list1.get(i).getName() %>
+				<%= list1.get(i).getPoint() %>점<br/>
+			<%	
+					}
+			%>	
 	</div>
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="js/bootstrap.js"></script>

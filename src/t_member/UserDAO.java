@@ -4,6 +4,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+
+import bbs.Bbs;
 
 public class UserDAO {
 
@@ -57,6 +60,23 @@ public class UserDAO {
 		return -1; //데이터베이스 오류
 	}
 	
-
+	public ArrayList<User> getList() {
+		String SQL = "select * from t_member order by point desc limit 16";
+		ArrayList<User> list1 = new ArrayList<User>();
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(SQL); 
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				User user = new User();
+				user.setName(rs.getString(2));
+				user.setPoint(rs.getInt(5));
+				list1.add(user);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list1;
+		
+	}
 
 }

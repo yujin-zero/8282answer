@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 public class AnswerDAO {
 
@@ -66,6 +67,31 @@ public class AnswerDAO {
 			e.printStackTrace();
 		}
 		return -1; //데이터베이스 오류
+	}
+	
+	
+	
+	public ArrayList<Answer> getList(int num_q) {
+		String SQL = "select * from t_answer where num_q = ? order by num_a";
+		ArrayList<Answer> list = new ArrayList<Answer>();
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			pstmt.setInt(1, num_q);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				Answer answer = new Answer();
+				answer.setNum_a(rs.getInt(1));
+				answer.setNum_q(rs.getInt(2));
+				answer.setNum_m(rs.getInt(3));
+				answer.setContent_a(rs.getString(4));
+				answer.setRecommend(rs.getInt(5));
+				answer.setDate_a(rs.getString(6));
+				list.add(answer);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
 	}
 	
 }

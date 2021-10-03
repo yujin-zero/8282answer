@@ -3,6 +3,9 @@
 <%@ page import="java.io.PrintWriter" %>
 <%@ page import="bbs.Bbs" %>
 <%@ page import="bbs.BbsDAO" %>
+<%@ page import="t_answer.Answer" %>
+<%@ page import="t_answer.AnswerDAO" %>
+<%@ page import="java.util.ArrayList" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -93,7 +96,7 @@
 				</thead>
 				<tbody>
 				<%
-					BbsDAO bbsDAO = new BbsDAO();
+					BbsDAO bbsDAO = new BbsDAO();	
 				%>
 					<tr>
 						<td style="width: 20%;">글 제목</td>
@@ -115,7 +118,19 @@
 						<td>댓글작성</td>
 						<td colspan="2"><textarea class="form-control" name="content_a" maxlength="1024"></textarea>
 						<input type="submit" class="btn btn-primary pull-right" value="입력"></td>
-					</tr>					
+					</tr>
+				<%
+					AnswerDAO answerDAO = new AnswerDAO();
+					ArrayList<Answer> list = answerDAO.getList(num_q);
+					for(int i = 0; i<list.size(); i++) {
+				%>	
+					<tr>
+						<td><%= bbsDAO.change(list.get(i).getNum_m()) %></td>
+						<td colspan="2" style="text-align: left;"><%= list.get(i).getContent_a() %> (<%=list.get(i).getDate_a() %>)</td>
+					</tr>
+				<%	
+					}
+				%>				
 				</tbody>
 			</table>
 			</form>

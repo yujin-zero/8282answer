@@ -7,7 +7,7 @@ public class Answer {
 	private int num_m;
 	private String content_a;
 	private int recommend;
-	private String datetime;
+	private String date_a;
 	public int getNum_a() {
 		return num_a;
 	}
@@ -38,11 +38,11 @@ public class Answer {
 	public void setRecommend(int recommend) {
 		this.recommend = recommend;
 	}
-	public String getDatetime() {
-		return datetime;
+	public String getDate_a() {
+		return date_a;
 	}
-	public void setDatetime(String datetime) {
-		this.datetime = datetime;
+	public void setDate_a(String date_a) {
+		this.date_a = date_a;
 	}
 	
 	
