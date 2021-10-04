@@ -126,7 +126,7 @@
 				%>	
 					<tr>
 						<td><%= bbsDAO.change(list.get(i).getNum_m()) %></td>
-						<td colspan="2" style="text-align: left;"><%= list.get(i).getContent_a() %> (<%=list.get(i).getDate_a() %>)</td>
+						<td colspan="2" style="text-align: left;"><%= list.get(i).getContent_a() %> (<%=list.get(i).getDate_a() %>) </td>
 					</tr>
 				<%	
 					}
