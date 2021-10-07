@@ -56,13 +56,15 @@ public class AnswerDAO {
 		String SQL = "insert into t_answer values (?,?,?,?,?,?)";
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
-			pstmt.setInt(1, getNext());
+			int z= getNext();
+			pstmt.setInt(1, z);
 			pstmt.setInt(2, num_q);
 			pstmt.setInt(3, num_m);
 			pstmt.setString(4, content_a);
 			pstmt.setInt(5, 0);
 			pstmt.setString(6, getDate());
-			return pstmt.executeUpdate();
+			pstmt.executeUpdate();
+			return z;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -93,5 +95,34 @@ public class AnswerDAO {
 		}
 		return list;
 	}
+	
+	public void recommend(int k){
+		String SQL = "update t_answer set recommend=recommend+1 where num_a=?";
+		try{
+			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			pstmt.setInt(1, k);
+			pstmt.executeUpdate();		
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public int recocnt(int x){
+		String SQL = "select recommend from t_answer where num_a=?";
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			pstmt.setInt(1, x);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				return rs.getInt(1);
+			}
+			
+		} catch(Exception e){
+			e.printStackTrace();
+		}
+		return -1;
+	}
+	
+
 	
 }

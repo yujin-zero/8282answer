@@ -117,7 +117,7 @@
 				<tbody>
 					<%
 						BbsDAO bbsDAO = new BbsDAO();
-						ArrayList<Bbs> list = bbsDAO.getList(pageNumber);
+						ArrayList<Bbs> list = bbsDAO.getList2(pageNumber);
 						for (int i=0; i<list.size(); i++) {
 					%>
 					<tr>

@@ -120,13 +120,19 @@
 						<input type="submit" class="btn btn-primary pull-right" value="입력"></td>
 					</tr>
 				<%
+					
 					AnswerDAO answerDAO = new AnswerDAO();
 					ArrayList<Answer> list = answerDAO.getList(num_q);
 					for(int i = 0; i<list.size(); i++) {
+						
+						
 				%>	
 					<tr>
 						<td><%= bbsDAO.change(list.get(i).getNum_m()) %></td>
-						<td colspan="2" style="text-align: left;"><%= list.get(i).getContent_a() %> (<%=list.get(i).getDate_a() %>) </td>
+						<td colspan="2" style="text-align: left;"><%= list.get(i).getContent_a() %> (<%=list.get(i).getDate_a() %>) 
+						추천 수 : <%= answerDAO.recocnt(list.get(i).getNum_a())%>
+						<a onclick="return confirm('추천하시겠습니까?')" href="recommendAction.jsp?num_a=<%= list.get(i).getNum_a() %>">추천</a>
+						<a onclick="" class="btn btn-primary pull-right">신고</a></td>
 					</tr>
 				<%	
 					}
@@ -137,6 +143,7 @@
 			<a href="main.jsp" class="btn btn-primary">목록</a>
 		</div>
 	</div>
+	
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="js/bootstrap.js"></script>
 </body>

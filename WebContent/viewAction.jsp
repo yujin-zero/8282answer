@@ -15,6 +15,7 @@
 <jsp:useBean id="answer" class="t_answer.Answer" scope="page"/>
 <jsp:setProperty name="answer" property="content_a" />
 <%@ page import="bbs.Bbs" %>
+<%@ page import="recommend.RecommendDAO" %>
 
 
 <!DOCTYPE html>
@@ -61,6 +62,10 @@
 					script.println("location.href = 'main.jsp'");
 					script.println("</script>");
 				}
+				
+				//RecommendDAO recommendDAO = new RecommendDAO();
+				//recommendDAO.input(result,id);
+				
 			}
 		}
 	

@@ -69,6 +69,7 @@ public class UserDAO {
 			while (rs.next()) {
 				User user = new User();
 				user.setName(rs.getString(2));
+				user.setId(rs.getString(3));
 				user.setPoint(rs.getInt(5));
 				list1.add(user);
 			}
@@ -79,4 +80,28 @@ public class UserDAO {
 		
 	}
 
+	public User getInfo(String id) {
+	      //name, point, grade
+	      String SQL = "select name, point, grade from t_member where id =?";
+	      //select name, point, grade, (select count(*)+1 from t_member where point>t.point) as rank from t_member as t where id = ? order by rank asc;
+	      User info = null;
+	      
+	      try {         
+	         pstmt = conn.prepareStatement(SQL);
+	         pstmt.setString(1, id);
+	         rs = pstmt.executeQuery();
+	         
+	         if(rs.next()) {
+	            info = new User();
+	            info.setName(rs.getString("name"));
+	            info.setPoint(rs.getInt("point"));
+	            info.setGrade(rs.getInt("grade"));
+	         }
+	      }catch(Exception e) {
+	         e.printStackTrace();
+	      }
+	      return info;
+	   }
+	
+	
 }

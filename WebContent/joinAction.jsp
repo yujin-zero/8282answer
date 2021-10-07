@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="t_member.UserDAO" %>
+<%@ page import="recommend.RecommendDAO" %>
 <%@ page import="java.io.PrintWriter" %>
 <% request.setCharacterEncoding("UTF-8"); %>
 <jsp:useBean id="user" class="t_member.User" scope="page"/>
@@ -45,6 +46,7 @@
 			}
 			else {
 				session.setAttribute("id",user.getId());
+				
 				PrintWriter script=response.getWriter();
 				script.println("<script>");
 				script.println("location.href = 'main.jsp'");

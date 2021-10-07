@@ -123,6 +123,121 @@ public class BbsDAO {
 		return list;
 	}
 	
+	public ArrayList<Bbs> getList1(int pageNumber) {
+		String SQL = "select * from t_question where num_q< ? and category=0  order by num_q desc limit 10;";
+		ArrayList<Bbs> list = new ArrayList<Bbs>();
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			pstmt.setInt(1, getNext() - (pageNumber - 1) * 10); 
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				Bbs bbs = new Bbs();
+				bbs.setNum_q(rs.getInt(1));
+				bbs.setNum_m(rs.getInt(2));
+				bbs.setTitle(rs.getString(3));
+				bbs.setContent_q(rs.getString(4));
+				bbs.setCategory(rs.getInt(5));
+				bbs.setDate_q(rs.getString(6));
+				list.add(bbs);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
+	public ArrayList<Bbs> getList2(int pageNumber) {
+		String SQL = "select * from t_question where num_q< ? and category=1  order by num_q desc limit 10;";
+		ArrayList<Bbs> list = new ArrayList<Bbs>();
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			pstmt.setInt(1, getNext() - (pageNumber - 1) * 10); 
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				Bbs bbs = new Bbs();
+				bbs.setNum_q(rs.getInt(1));
+				bbs.setNum_m(rs.getInt(2));
+				bbs.setTitle(rs.getString(3));
+				bbs.setContent_q(rs.getString(4));
+				bbs.setCategory(rs.getInt(5));
+				bbs.setDate_q(rs.getString(6));
+				list.add(bbs);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
+	public ArrayList<Bbs> getList3(int pageNumber) {
+		String SQL = "select * from t_question where num_q< ? and category=2  order by num_q desc limit 10;";
+		ArrayList<Bbs> list = new ArrayList<Bbs>();
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			pstmt.setInt(1, getNext() - (pageNumber - 1) * 10); 
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				Bbs bbs = new Bbs();
+				bbs.setNum_q(rs.getInt(1));
+				bbs.setNum_m(rs.getInt(2));
+				bbs.setTitle(rs.getString(3));
+				bbs.setContent_q(rs.getString(4));
+				bbs.setCategory(rs.getInt(5));
+				bbs.setDate_q(rs.getString(6));
+				list.add(bbs);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
+	public ArrayList<Bbs> getList4(int pageNumber) {
+		String SQL = "select * from t_question where num_q< ? and category=3  order by num_q desc limit 10;";
+		ArrayList<Bbs> list = new ArrayList<Bbs>();
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			pstmt.setInt(1, getNext() - (pageNumber - 1) * 10); 
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				Bbs bbs = new Bbs();
+				bbs.setNum_q(rs.getInt(1));
+				bbs.setNum_m(rs.getInt(2));
+				bbs.setTitle(rs.getString(3));
+				bbs.setContent_q(rs.getString(4));
+				bbs.setCategory(rs.getInt(5));
+				bbs.setDate_q(rs.getString(6));
+				list.add(bbs);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
+	public ArrayList<Bbs> getList5(int pageNumber) {
+		String SQL = "select * from t_question where num_q< ? and category=4  order by num_q desc limit 10;";
+		ArrayList<Bbs> list = new ArrayList<Bbs>();
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			pstmt.setInt(1, getNext() - (pageNumber - 1) * 10); 
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				Bbs bbs = new Bbs();
+				bbs.setNum_q(rs.getInt(1));
+				bbs.setNum_m(rs.getInt(2));
+				bbs.setTitle(rs.getString(3));
+				bbs.setContent_q(rs.getString(4));
+				bbs.setCategory(rs.getInt(5));
+				bbs.setDate_q(rs.getString(6));
+				list.add(bbs);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
 	public boolean nextPage(int pageNumber) {
 		String SQL = "select * from t_question where num_q < ?";
 		try {
