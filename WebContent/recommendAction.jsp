@@ -45,6 +45,8 @@
 			answerDAO.recommend(num_a);
 			//recommendDAO.valueup(num_a,id);
 			recommendDAO.input(num_a,id);
+			UserDAO userDAO = new UserDAO();
+			userDAO.inputpoint(userDAO.numatom(num_a));
 			PrintWriter script=response.getWriter();
 			script.println("<script>");
 			script.println("alert('추천이 되었습니다.')");

@@ -103,5 +103,60 @@ public class UserDAO {
 	      return info;
 	   }
 	
+	public int numatom(int num_a){
+		String SQL="select num_m from t_answer where num_a=?";
+		try {         
+		 	 PreparedStatement pstmt = conn.prepareStatement(SQL);
+	         pstmt = conn.prepareStatement(SQL);
+	         pstmt.setInt(1, num_a);
+	         rs=pstmt.executeQuery();
+	         if (rs.next()) {
+					return rs.getInt(1);
+				}
+	      }catch(Exception e) {
+	         e.printStackTrace();
+	      }
+		return -1;
+	}
+	public void inputpoint(int num_m){
+		String SQL="update t_member set point = point +3  where num_m=?";
+		try {         
+			 PreparedStatement pstmt = conn.prepareStatement(SQL);
+	         pstmt = conn.prepareStatement(SQL);
+	         pstmt.setInt(1, num_m);
+	         pstmt.executeUpdate();
+	         
+	      }catch(Exception e) {
+	         e.printStackTrace();
+	      }
+	}
+	
+	public void qpoint(String id){
+		String SQL="update t_member set point = point -20  where id=?";
+		try {         
+			 PreparedStatement pstmt = conn.prepareStatement(SQL);
+	         pstmt = conn.prepareStatement(SQL);
+	         pstmt.setString(1, id);
+	         pstmt.executeUpdate();
+	         
+	      }catch(Exception e) {
+	         e.printStackTrace();
+	      }
+	}
+	
+	public void apoint(String id){
+		String SQL="update t_member set point = point +10  where id=?";
+		try {         
+			 PreparedStatement pstmt = conn.prepareStatement(SQL);
+	         pstmt = conn.prepareStatement(SQL);
+	         pstmt.setString(1, id);
+	         pstmt.executeUpdate();
+	         
+	      }catch(Exception e) {
+	         e.printStackTrace();
+	      }
+	}
+	
+	
 	
 }

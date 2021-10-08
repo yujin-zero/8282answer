@@ -57,6 +57,8 @@
 					script.println("</script>");
 				}
 				else {
+					UserDAO userDAO = new UserDAO();
+					userDAO.apoint(id);
 					PrintWriter script=response.getWriter();
 					script.println("<script>");
 					script.println("location.href = 'main.jsp'");

@@ -71,6 +71,22 @@ public class AnswerDAO {
 		return -1; //데이터베이스 오류
 	}
 	
+	public String change(int y) {
+		String SQL=" select distinct name from t_member as m join t_answer as a on m.num_m = a.num_m where m.num_m = ?;";
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			pstmt.setInt(1, y);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				return rs.getString(1);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "-1";
+	}
+	
 	
 	
 	public ArrayList<Answer> getList(int num_q) {

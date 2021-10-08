@@ -49,6 +49,9 @@
 					script.println("</script>");
 				}
 				else {
+					UserDAO userDAO = new UserDAO();
+					userDAO.qpoint(id);
+					
 					PrintWriter script=response.getWriter();
 					script.println("<script>");
 					script.println("location.href = 'main.jsp'");
