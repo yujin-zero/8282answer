@@ -238,6 +238,73 @@ public class BbsDAO {
 		return list;
 	}
 	
+	public ArrayList<Bbs> getList6(int pageNumber, int num_m) {
+		String SQL = "select * from t_question where num_q< ? and num_m=?  order by num_q desc limit 10;";
+		ArrayList<Bbs> list = new ArrayList<Bbs>();
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			pstmt.setInt(1, getNext() - (pageNumber - 1) * 10);
+			pstmt.setInt(2, num_m);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				Bbs bbs = new Bbs();
+				bbs.setNum_q(rs.getInt(1));
+				bbs.setNum_m(rs.getInt(2));
+				bbs.setTitle(rs.getString(3));
+				bbs.setContent_q(rs.getString(4));
+				bbs.setCategory(rs.getInt(5));
+				bbs.setDate_q(rs.getString(6));
+				list.add(bbs);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
+	public ArrayList<Bbs> getList7(int num_q) {
+		String SQL = "select * from t_question where num_q= ? ";
+		ArrayList<Bbs> list = new ArrayList<Bbs>();
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			pstmt.setInt(1, num_q);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				Bbs bbs = new Bbs();
+				bbs.setNum_q(rs.getInt(1));
+				bbs.setNum_m(rs.getInt(2));
+				bbs.setTitle(rs.getString(3));
+				bbs.setContent_q(rs.getString(4));
+				bbs.setCategory(rs.getInt(5));
+				bbs.setDate_q(rs.getString(6));
+				list.add(bbs);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
+	public ArrayList<Bbs> list_m(int num_m) {
+		String SQL = "select distinct num_q from t_answer where num_m=?";
+		ArrayList<Bbs> list = new ArrayList<Bbs>();
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			pstmt.setInt(1, num_m); 
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				Bbs bbs = new Bbs();
+				bbs.setNum_q(rs.getInt(1));
+				list.add(bbs);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
+	
+	
 	public boolean nextPage(int pageNumber) {
 		String SQL = "select * from t_question where num_q < ?";
 		try {

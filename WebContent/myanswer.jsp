@@ -117,8 +117,12 @@
 				<tbody>
 					<%
 						BbsDAO bbsDAO = new BbsDAO();
-						ArrayList<Bbs> list = bbsDAO.getList5(pageNumber);
-						for (int i=0; i<list.size(); i++) {
+						ArrayList<Bbs> list3 = bbsDAO.list_m(bbsDAO.idnum(id));
+						for (int j=0; j<list3.size(); j++){
+							ArrayList<Bbs> list = bbsDAO.getList7(list3.get(j).getNum_q());
+							for (int i=0; i<list.size(); i++) {
+							
+							
 					%>
 					<tr>
 						<td><%= list.get(i).getNum_q() %></td>
@@ -128,6 +132,8 @@
 					</tr>
 					<%		
 						}
+						}
+						
 					%>
 					
 				</tbody>
@@ -135,11 +141,11 @@
 			<%
 				if(pageNumber != 1) {
 			%>
-				<a href="etc.jsp?pageNumber=<%=pageNumber - 1 %>" class="btn btn-sucess btn-arraw-left">이전</a>
+				<a href="myanswer.jsp?pageNumber=<%=pageNumber - 1 %>" class="btn btn-sucess btn-arraw-left">이전</a>
 			<%
 				} if (bbsDAO.nextPage(pageNumber+1)) {
 			%>	
-				<a href="etc.jsp?pageNumber=<%=pageNumber + 1 %>" class="btn btn-sucess btn-arraw-left">다음</a>
+				<a href="myanswer.jsp?pageNumber=<%=pageNumber + 1 %>" class="btn btn-sucess btn-arraw-left">다음</a>
 			<%
 				}
 			%>

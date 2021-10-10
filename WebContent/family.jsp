@@ -135,11 +135,11 @@
 			<%
 				if(pageNumber != 1) {
 			%>
-				<a href="main.jsp?pageNumber=<%=pageNumber - 1 %>" class="btn btn-sucess btn-arraw-left">이전</a>
+				<a href="family.jsp?pageNumber=<%=pageNumber - 1 %>" class="btn btn-sucess btn-arraw-left">이전</a>
 			<%
 				} if (bbsDAO.nextPage(pageNumber+1)) {
 			%>	
-				<a href="main.jsp?pageNumber=<%=pageNumber + 1 %>" class="btn btn-sucess btn-arraw-left">다음</a>
+				<a href="family.jsp?pageNumber=<%=pageNumber + 1 %>" class="btn btn-sucess btn-arraw-left">다음</a>
 			<%
 				}
 			%>
@@ -150,7 +150,11 @@
 			<a href="love.jsp">사랑</a>
 			<a href="Worry.jsp">고민</a>
 			<a href="etc.jsp">기타</a>
-			<br /><br /><br />
+			<br><br>
+			<a href="myquestion.jsp">작성한 게시글</a> <br>
+			<a href="myanswer.jsp">답변한 게시글</a>
+			
+			<br /><br />
 			
 		</div>
 			<%
