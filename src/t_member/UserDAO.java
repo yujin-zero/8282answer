@@ -46,19 +46,48 @@ public class UserDAO {
 		return -2; //데이터베이스 오류
 	}
 	
-	public int join(User user) {
-		String SQL = "insert into t_member(name,id,password) values (?,?,?)";
-		try {
-			pstmt = conn.prepareStatement(SQL);
-			pstmt.setString(1, user.getName());
-			pstmt.setString(2, user.getId());
-			pstmt.setString(3, user.getPassword());
-			return pstmt.executeUpdate();
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
-		return -1; //데이터베이스 오류
-	}
+	public void join(User user) {
+	      String SQL = "insert into t_member(name,id,password) values (?,?,?)";
+	      try {
+	         pstmt = conn.prepareStatement(SQL);
+	         pstmt.setString(1, user.getName());
+	         pstmt.setString(2, user.getId());
+	         pstmt.setString(3, user.getPassword());
+	         pstmt.executeUpdate();
+	      } catch(Exception e) {
+	         e.printStackTrace();
+	      }
+	   }
+
+	   public boolean joinCheckId(String id) {
+	      //user Id overlap check
+	      String SQL = "select * from t_member where id = ?";
+	      boolean check = false;
+	      try {
+	         pstmt = conn.prepareStatement(SQL);
+	         pstmt.setString(1, id);
+	         rs = pstmt.executeQuery();
+	         check = rs.next();
+	      } catch(Exception e) {
+	         e.printStackTrace();
+	      }
+	      return check;
+	   }
+	   
+	   public boolean joinCheckName(String name) {
+	      //user Name overlap check
+	      String SQL = "select * from t_member where name = ?";
+	      boolean check = false;
+	      try {
+	         pstmt = conn.prepareStatement(SQL);
+	         pstmt.setString(1, name);
+	         rs = pstmt.executeQuery();
+	         check = rs.next();
+	      } catch(Exception e) {
+	         e.printStackTrace();
+	      }
+	      return check;
+	   }
 	
 	public ArrayList<User> getList() {
 		String SQL = "select * from t_member order by point desc limit 16";
