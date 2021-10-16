@@ -9,7 +9,7 @@
 <body>
 	<script>
 		location.href='main.jsp';
-		//ww
+		
 	</script>
 </body>
 </html>

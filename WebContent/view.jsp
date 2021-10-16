@@ -5,6 +5,8 @@
 <%@ page import="bbs.BbsDAO" %>
 <%@ page import="t_answer.Answer" %>
 <%@ page import="t_answer.AnswerDAO" %>
+<%@ page import="t_member.UserDAO" %>
+<%@ page import="t_member.User" %>
 <%@ page import="java.util.ArrayList" %>
 <!DOCTYPE html>
 <html>
@@ -67,6 +69,25 @@
 			</ul>
 			<%
 				} else {
+					UserDAO userDAO = new UserDAO();
+					User info = userDAO.getInfo(id);
+					
+					ArrayList<User> list1=userDAO.getList();
+					int j=1;
+					int rank=0;
+					
+					for(int i=0; i<list1.size(); i++){
+						if(i!=0)
+						{
+							if(list1.get(i).getPoint() != list1.get(i-1).getPoint())
+							{
+							j++;
+							}	
+						}
+						if(list1.get(i).getId().contains(id)){
+							rank=j;
+						}
+					}
 			%>
 			<ul class="nav navbar-nav navbar-right">
 				<li class="dropdown">
@@ -74,6 +95,12 @@
 					data-toggle="dropdown" role="button" aria-haspopup="true"
 					aria-expanded="false">회원관리<span class="caret"></span></a>
 					<ul class="dropdown-menu">
+					<li>닉네임 : <%=info.getName() %></li>
+						<li>포인트 : <%=info.getPoint() %></li>
+						<li>등급 : <%=info.getGrade() %></li>
+						<li>순위 : <%= rank %>
+						
+						</li>
 						<li><a href="logoutAction.jsp">로그아웃</a></li>
 						
 					</ul>
@@ -100,7 +127,7 @@
 				%>
 					<tr>
 						<td style="width: 20%;">글 제목</td>
-						<td colspan="2"><%= bbs.getTitle() %></td>
+						<td colspan="2"><%= bbs.getTitle() %><a onclick="return confirm('신고하시겠습니까?')" href="report_q.jsp?num_attacker=<%= bbs.getNum_m() %>" target="_blank" class="btn btn-primary pull-right">신고</a></td>
 					</tr>
 					<tr>
 						<td>작성자</td>
@@ -132,7 +159,7 @@
 						<td colspan="2" style="text-align: left;"><%= list.get(i).getContent_a() %> (<%=list.get(i).getDate_a() %>) 
 						추천 수 : <%= answerDAO.recocnt(list.get(i).getNum_a())%>
 						<a onclick="return confirm('추천하시겠습니까?')" href="recommendAction.jsp?num_a=<%= list.get(i).getNum_a() %>">추천</a>
-						<a onclick="" class="btn btn-primary pull-right">신고</a></td>
+						<a onclick="return confirm('신고하시겠습니까?')" href="report_a.jsp?num_attacker=<%= list.get(i).getNum_m() %>" target="_blank" class="btn btn-primary pull-right">신고</a></td>
 					</tr>
 				<%	
 					}

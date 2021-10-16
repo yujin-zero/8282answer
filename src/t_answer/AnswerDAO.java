@@ -139,6 +139,22 @@ public class AnswerDAO {
 		return -1;
 	}
 	
+	public int answercheck(int num_m, int num_q){
+		String SQL="select exists(select * from t_answer where num_q=? and num_m=?)";
+		try {         
+			 PreparedStatement pstmt = conn.prepareStatement(SQL);
+	         pstmt = conn.prepareStatement(SQL);
+	         pstmt.setInt(1, num_q);
+	         pstmt.setInt(2, num_m);
+	         rs=pstmt.executeQuery();
+	         if (rs.next()) {
+	        	 return rs.getInt(1);
+				}
 
+	      }catch(Exception e) {
+	         e.printStackTrace();
+	      }
+		return -1; //오류
+	}
 	
 }

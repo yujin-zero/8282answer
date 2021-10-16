@@ -68,12 +68,19 @@
 					User info = userDAO.getInfo(id);
 					
 					ArrayList<User> list1=userDAO.getList();
+					int j=1;
 					int rank=0;
 					
 					for(int i=0; i<list1.size(); i++){
-						if(list1.get(i).getId().contains(id))
+						if(i!=0)
 						{
-							rank=i+1;
+							if(list1.get(i).getPoint() != list1.get(i-1).getPoint())
+							{
+							j++;
+							}	
+						}
+						if(list1.get(i).getId().contains(id)){
+							rank=j;
 						}
 					}
 
@@ -157,20 +164,27 @@
 			<a href="Worry.jsp">고민</a>
 			<a href="etc.jsp">기타</a>
 			<br><br>
+			<% if (id != null) { %>
 			<a href="myquestion.jsp">작성한 게시글</a> <br>
 			<a href="myanswer.jsp">답변한 게시글</a>
-			
+			<%
+			}
+			%>
 			<br /><br />
 			
 		</div>
 			<%
 				UserDAO userDAO = new UserDAO();
 				ArrayList<User> list1 = userDAO.getList();
-	
+				int j=1;
 				for(int i=0; i<list1.size(); i++){
+					if(i!=0){
+					if(list1.get(i).getPoint() != list1.get(i-1).getPoint()){
+						j++;
+					}}
 			%>
-
-				<%= i+1 %>.
+				
+				<%= j %>.
 				<%= list1.get(i).getName() %>
 				<%= list1.get(i).getPoint() %>점<br/>
 			<% } %>

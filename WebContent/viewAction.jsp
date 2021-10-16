@@ -58,7 +58,11 @@
 				}
 				else {
 					UserDAO userDAO = new UserDAO();
+					//int i = answerDAO.answercheck(num_m,qqq);
+					//답변 두번쨰부터는 포인트 지급 안함
+					
 					userDAO.apoint(id);
+					
 					PrintWriter script=response.getWriter();
 					script.println("<script>");
 					script.println("location.href = 'main.jsp'");

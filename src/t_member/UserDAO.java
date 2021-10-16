@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import bbs.Bbs;
@@ -47,19 +48,20 @@ public class UserDAO {
 	}
 	
 	public void join(User user) {
-	      String SQL = "insert into t_member(name,id,password) values (?,?,?)";
-	      try {
-	         pstmt = conn.prepareStatement(SQL);
-	         pstmt.setString(1, user.getName());
-	         pstmt.setString(2, user.getId());
-	         pstmt.setString(3, user.getPassword());
-	         pstmt.executeUpdate();
-	      } catch(Exception e) {
-	         e.printStackTrace();
-	      }
-	   }
-
-	   public boolean joinCheckId(String id) {
+		String SQL = "insert into t_member(name,id,password) values (?,?,?)";
+		try {
+			pstmt = conn.prepareStatement(SQL);
+			pstmt.setString(1, user.getName());
+			pstmt.setString(2, user.getId());
+			pstmt.setString(3, user.getPassword());
+			pstmt.executeUpdate();
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		 //데이터베이스 오류
+	}
+	
+	public boolean joinCheckId(String id) {
 	      //user Id overlap check
 	      String SQL = "select * from t_member where id = ?";
 	      boolean check = false;
@@ -73,8 +75,8 @@ public class UserDAO {
 	      }
 	      return check;
 	   }
-	   
-	   public boolean joinCheckName(String name) {
+	
+	public boolean joinCheckName(String name) {
 	      //user Name overlap check
 	      String SQL = "select * from t_member where name = ?";
 	      boolean check = false;
@@ -88,6 +90,98 @@ public class UserDAO {
 	      }
 	      return check;
 	   }
+	
+	public String idname(String x) {
+		String SQL=" select name from t_member where id=?";
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			pstmt.setString(1, x);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				return rs.getString(1);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "";
+	}
+	
+	public String numname(int x) {
+		String SQL=" select name from t_member where num_m=?";
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			pstmt.setInt(1, x);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				return rs.getString(1);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "";
+	}
+	
+	public void drop(int num_m) {
+		String SQL="delete from t_member where num_m=?";
+		try {         
+			 PreparedStatement pstmt = conn.prepareStatement(SQL);
+	         pstmt = conn.prepareStatement(SQL);
+	         pstmt.setInt(1, num_m);
+	         pstmt.executeUpdate();
+	         System.out.println("test");
+	      }catch(Exception e) {
+	         e.printStackTrace();
+	      }
+	}
+	
+	public void updateReport_a(int num_m){
+		String SQL="update t_member set report_a = report_a +1  where num_m=?";
+		try {         
+			 PreparedStatement pstmt = conn.prepareStatement(SQL);
+	         pstmt = conn.prepareStatement(SQL);
+	         pstmt.setInt(1, num_m);
+	         pstmt.executeUpdate();
+	         
+	      }catch(Exception e) {
+	         e.printStackTrace();
+	      }
+	}
+	
+	public void updateReport_q(int num_m){
+		String SQL="update t_member set report_q = report_q +1  where num_m=?";
+		try {         
+			 PreparedStatement pstmt = conn.prepareStatement(SQL);
+	         pstmt = conn.prepareStatement(SQL);
+	         pstmt.setInt(1, num_m);
+	         pstmt.executeUpdate();
+	         
+	      }catch(Exception e) {
+	         e.printStackTrace();
+	      }
+	}
+	
+	public ArrayList<User> reportList() {
+		String SQL = "select * from t_member where report_q+report_a != 0 order by report_q+report_a desc";
+		ArrayList<User> list = new ArrayList<User>();
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(SQL); 
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				User user = new User();
+				user.setName(rs.getString(2));
+				user.setReport_q(rs.getInt(7));
+				user.setReport_a(rs.getInt(8));
+				user.setNum_m(rs.getInt(1));
+				list.add(user);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+		
+	}
 	
 	public ArrayList<User> getList() {
 		String SQL = "select * from t_member order by point desc limit 16";
@@ -185,6 +279,7 @@ public class UserDAO {
 	         e.printStackTrace();
 	      }
 	}
+	
 	
 	
 	

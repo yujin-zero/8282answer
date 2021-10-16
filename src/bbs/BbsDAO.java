@@ -69,7 +69,7 @@ public class BbsDAO {
 	}
 	
 	public int idnum(String x) {
-		String SQL=" select num_m from t_member where id=?;";
+		String SQL=" select num_m from t_member where id=?";
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, x);
